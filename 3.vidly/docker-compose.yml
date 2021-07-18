@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+
+  #   Running tests automatically
+  web-tests:
+    # Reusing the above image "3vidly" is folder name & "web" is service name
+    #  Alternatively you can get the image name from docker-compose ps or directly provide the build path
+    image: 3vidly_web
+    volumes:
+      - ./frontend:/app
+    command: npm test
+
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      - DB_URL=mongodb://db/vidly
+    volumes:
+      - ./backend:/app
+
+    #    (Waiting for db to start & Migrating database [METHOD 1])
+    #    command: ./wait-for db:27017 && migrate-mongo up && npm start
+
+    #    (Waiting for db to start & Migrating database [METHOD 2 by defining a entrypoint])
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:

@@ -1,0 +1,63 @@
+******************** WORKING WITH DOCKER COMPOSE ********************
+
+1. Create a service for each stack
+   ex:  db , frontend and backend should be treated as a service
+
+2. Specifying the build
+   >> Build can be a project directory where Dockerfile should be available or can be an dockerhub image
+   >> ex:
+        services:
+          api:
+            build: ./backend
+          db:
+            image: mongo:4.0-xenial
+
+2. Creating a volume for the db first inside services
+   >> ex:
+          volumes:
+              vidly:
+
+3. Mapping the volume with db
+   >>    ex:
+            db:
+              image: mongo:4.0-xenial
+              ports:
+              - 27017:27017
+              volumes:
+               - vidly:/data/db
+
+
+
+
+******************** RUNNING WITH DOCKER COMPOSE ********************
+
+1. Building an Image
+   >> docker-compose build
+   >> docker--compose build --no-cache (Avoids building from existing cache)
+
+2. Staring an Container
+   >> Creates a new container from image
+   >> docker-compose up
+   >> docker-compose up --build (Builds first then starts app)
+   >> docker-compose up -d (Running app in background)
+
+3. Stopping/Removing an Container
+   >> Removes created containers
+   >> docker compose down
+
+4. Listing running containers
+   >> docker-composer ps
+
+5. Viewing logs
+   >> docker-compose logs (Shows all the logs of running container at a single place)
+   >> docker-compose logs "container id" (Shows logs of specific container)
+
+6. Publishing changes (Mapping the local source code with container)
+   >> Listen the changes in realtime without manually coping files
+   >> "service_name":
+        volumes:
+          - "local machine path":"docker container dir path"
+      ex:
+        api:
+          volumes:
+          - ./backend:/app

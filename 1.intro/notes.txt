@@ -1,0 +1,62 @@
+
+******************** SETTING UP DOCKER PROJECT ********************
+
+
+1.Install Docker Image :
+ > Find the required image from Dockerhub
+ > Syntax : FROM "DOCKER_IMAGE"
+  ex : FROM node:alpine
+  Here node:alpine is docker image name
+
+
+2. Copying current directory to the docker :
+   > docker "current dir" "docker dir"
+    ex : docker . /app
+    Here "." is current working directory & "/app" is the dhe dir name copied to docker
+
+3. Setting working directory on docker :
+    > docker "directory_name:
+    ex: docker /app
+    Here "/app" would be set as the current directory.
+    So that all the files inside this directory would be directory accessible without adding prefix as dir name
+    It work same as "cd dirname" and accessing anything inside it
+
+4.  Running Command on the shell :
+    > It can be called only a single time in a docker file
+    > This command only have 1, which is your execute start point (e.g. ["npm", "start"], ["node", "app.js"])
+    > CMD "any linux command"
+    ex: CMS node app.js
+
+5.  Installing packages & dependencies
+    > Unlike : "Run" command Can be many, and it is used in build process, e.g. install multiple libraries
+    > RUN "any linux command"
+    ex: RUN npm install
+
+
+
+******************** RUNNING DOCKER PROJECT ********************
+
+
+1. Building docker Image :
+   > docker build -t "tag name" "directory where Dockerfile resides"
+   ex: docker build -t hello-docker .
+
+2. Docker images list :
+   > docker image ls
+
+3. Running docker project :
+   > docker run "tag name" OR docker run "Image id" (You can get unique Image id for each docker project)
+   ex: docker run hello-docker
+
+4. Running docker project in interactive mode :
+   > docker run -it "image id/ tag name" "linux command name"
+   > ex: docker run -it ubuntu sh
+   > Here "sh" is shell(terminal) provided by ubuntu
+
+4. Starting docker project in interactive mode :
+   > docker start -i "container id"
+   > ex: docker start -i 53c58f895c64
+
+
+
+
